@@ -1,57 +1,72 @@
-    <!DOCTYPE HTML>
-    <html lang="en">
+<!DOCTYPE HTML>
+<html lang="en">
 
-    <!-- CLASSES: -->
-    <!-- actions: fund(), withdraw() -->
-    <!-- getters: getFundersCount(), getFunder(), getPriceFeed(), getFunderToAmount() -->
-    <!-- icons -->
+<!-- CLASSES: -->
+<!-- actions: fund(), withdraw() -->
+<!-- getters: getFundersCount(), getFunder(), getPriceFeed(), getFunderToAmount() -->
+<!-- icons -->
 
-    <head>
-        <title>Fund Me App</title>
-        <h1>Welcome to Fund Me App</h1>
-        <link rel="stylesheet" , href="style.css">
-        <script src="./script.js" type="module"></script>
-    </head>
 
-    <body>
-        <button class="actions" id="connectButton">
-            <span class="icons">🖇️</span>
-            Connect
-        </button><br>
+<head>
+    <title>Fund Me App</title>
+    <h1>Welcome to Fund Me App</h1>
+    <link rel="stylesheet" , href="style.css">
+    <script src="./script.js" type="module"></script>
+</head>
 
-        <h2>
-            Account: <span id="showAccount"></span>
-        </h2><br>
+<body>
 
-        <button class="actions" id="fundButton">
-            <span class="icons">🤌</span>
-            Fund
-        </button><br>
+    <button type="button" class="actions" id="connectButton">
+        <span class="icons">🖇️</span>
+        Connect
+    </button><br>
+    <h2>
+        Account: <span id="showAccount"></span>
+    </h2><br>
 
-        <button class="actions" id="withdrawButton">
-            <span class="icons">🫱</span>
-            Withdraw
-        </button><br>
+    <!-- </form> -->
+    <label for="ethAmountInput">ETH Amount</label>
+    <input id="ethAmountInput" placeholder="0.1" type="number"/>
+    <!-- </form> -->
+    <button type="button" class="actions" id="fundButton">
+        <span class="icons">🤌</span>
+        Fund
+    </button><br>
+    <h2 id="fundButtonResponse"></h2>
+    
+    <button type="button" class="actions" id="withdrawButton">
+        <span class="icons">🫱</span>
+        Withdraw
+    </button><br>
+    <h2 id="withdrawButtonResponse"></h2>
 
-        <button class="getters" id="getFundersCountButton">
-            <span class="icons">👨‍👩‍👧‍👦</span>
-            Get the number of funders
-        </button><br>
+    <!-- </form> -->
+    <label for="funderIndexInput">Funder index</label>
+    <input id="funderIndexInput" placeholder="0" type="number"/>
+    <!-- </form> -->
+    <button type="button" class="getters" id="getFunderButton">
+        <span class="icons">🧔</span>
+        Get funder
+    </button><br>
+    <h2 id="getFunderButtonResponse"></h2>
 
-        <button class="getters" id="getFunderButton">
-            <span class="icons">🧔</span>
-            Get funder
-        </button><br>
 
-        <button class="getters" id="getPriceFeedButton">
-            <span class="icons">🪙</span>
-            Get price feed
-        </button>
+    <button type="button" class="getters" id="getPriceFeedButton">
+        <span class="icons">🪙</span>
+        Get price feed
+    </button>
+    <h2 id="getPriceFeedButtonResponse"></h2>
 
-        <button class="getters" id="getFunderToAmountButton">
-            <span class="icons">🧔 -> 🪙</span>
-            Get funder -> amount funded;
-        </button>
-    </body>
+    <!-- </form> -->
+    <label for="funderAddressInput">Funder address</label>
+    <input id="funderAddressInput" type="text"/>
+    <!-- </form> -->
+    <button type="button" class="getters" id="getFunderToAmountButton">
+        <span class="icons">🧔 -> 🪙</span>
+        Get funder -> amount funded;
+    </button>
+    <h2 id="getFunderToAmountButtonResponse"></h2>
+    
+</body>
 
-    </html>
+</html>
