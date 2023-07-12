@@ -1,0 +1,76 @@
+/* Apply general styling to the page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Set the background color */
+    padding: 20px;
+    margin: 0;
+  }
+  
+  h1 {
+    color: #333; /* Set the heading color */
+  }
+  
+  h2 {
+    margin-top: 20px;
+    color: #555; /* Set the subheading color */
+  }
+  
+  /* Style for the connect button */
+  #connectButton {
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  /* Style for the actions buttons */
+  .actions {
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  /* Style for the getters buttons */
+  .getters {
+    color: white;
+    background-color: green;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  /* Style for the icons */
+  .icons {
+    margin-right: 5px;
+  }
+  
+  /* Style for the account display */
+  #showAccount {
+    font-weight: bold;
+  }
+  
+  /* Additional styles for professional decoration */
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Media query for responsive layout */
+  @media (max-width: 768px) {
+    .container {
+      max-width: 100%;
+    }
+  }
+  

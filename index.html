@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<!-- CLASSES: -->
+<!-- actions: fund(), withdraw() -->
+<!-- getters: getFundersCount(), getFunder(), getPriceFeed(), getAddressToAmount() -->
+<!-- icons -->
+
+<head>
+    <title>Fund Me App</title>
+    <h1>Welcome to Fund Me App</h1>
+    <link rel="stylesheet" , href="style.css">
+    <script src="./script.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <button id="connectButton" class="actions" onclick="connect()">
+        <span class="icons">🖇️</span>
+        Connect
+    </button><br>
+
+    <h2>
+        Account: <span id="showAccount"></span>
+    </h2><br>
+
+    <button class="actions" id="fundButton" onclick="fund()">
+        <span class="icons">🤌</span>
+        Fund
+    </button><br>
+
+    <button class="actions" id="withdrawButton" onclick="withdraw()">
+        <span class="icons">🫱</span>
+        Withdrawn
+    </button><br>
+
+    <button class="getters" id="getFundersCountButtonButton" onclick="getFundersCount()">
+        <span class="icons">👨‍👩‍👧‍👦</span>
+        Get the number of funders
+    </button><br>
+
+    <button class="getters" id="getFunderButton" onclick="getFunder()">
+        <span class="icons">🧔</span>
+        Get funder
+    </button><br>
+
+    <button class="getters" id="getPriceFeedButton" onclick="getPriceFeed()">
+        <span class="icons">🪙</span>
+        Get price feed
+    </button>
+</body>
+
+</html>
