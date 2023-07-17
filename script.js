@@ -181,8 +181,10 @@ connectButton.addEventListener("click", async () => {
     let funderAddress = await connect();
 
     // Response
-    connectButton.innerHTML = "Connected";
-    connectButtonResponse.innerHTML = (funderAddress);
+    if (funderAddress != null) {
+        connectButton.innerHTML = "Connected";
+        connectButtonResponse.innerHTML = (funderAddress);
+    }
 });
 
 fundButton.addEventListener("click", async () => {
