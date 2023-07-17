@@ -19,6 +19,7 @@ let getFunderButton = document.getElementById("getFunderButton");
 let getPriceFeedButton = document.getElementById("getPriceFeedButton");
 let getFunderToAmountButton = document.getElementById("getFunderToAmountButton");
 let getFunderBalanceButton = document.getElementById("getFunderBalanceButton");
+let getContractOwnerButton = document.getElementById("getContractOwnerButton");
 let getContractBalanceButton = document.getElementById("getContractBalanceButton");
 
 
@@ -36,6 +37,7 @@ let getFunderButtonResponse = document.getElementById("getFunderButtonResponse")
 let getPriceFeedButtonResponse = document.getElementById("getPriceFeedButtonResponse");
 let getFunderToAmountButtonResponse = document.getElementById("getFunderToAmountButtonResponse");
 let getFunderBalanceButtonResponse = document.getElementById("getFunderBalanceButtonResponse");
+let getContractOwnerButtonResponse = document.getElementById("getContractOwnerButtonResponse");
 let getContractBalanceButtonResponse = document.getElementById("getContractBalanceButtonResponse");
 
 
@@ -81,7 +83,7 @@ async function fund(ethAmount) { // amount unit: ETH
 }
 
 
-// action: withdraw
+// Action: withdraw
 async function withdraw() {
     let withdrawSuccess = null;
     try {
@@ -98,7 +100,22 @@ async function withdraw() {
 }
 
 
-// action: get contract's balance
+// Action: get contract's owner
+async function getContractOwner() {
+    let ownerAddres = null;
+    try {
+        ownerAddres = await FUND_CONTRACT.getContractOwner();
+
+    } catch (err) {
+        window.alert("--> getContractOwner() failed^ Reason: view in console")
+        console.log("--> getContractOwner() failed^ Reason:\n", err);
+        console.log("-----------------------------------------------------------------------------------------------");
+    }
+    return ownerAddres;
+}
+
+
+// Action: get contract's balance
 async function getContractBalance() {
     let contractBalance = null;
     try {
@@ -203,6 +220,13 @@ withdrawButton.addEventListener("click", async () => {
     // Response
     withdrawButtonResponse.innerHTML = (withdrawSuccess ? "You have withdrawn" : "Transaction failed");
 });
+
+getContractOwnerButton.addEventListener("click", async () => {
+    const ownerAddres = await getContractOwner();
+
+    // Response
+    getContractOwnerButtonResponse.innerHTML = ("Contract's owner: " + ownerAddres);
+})
 
 getContractBalanceButton.addEventListener("click", async () => {
     const contractBalance = await getContractBalance();
