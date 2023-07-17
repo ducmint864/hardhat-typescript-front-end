@@ -1,76 +1,191 @@
-/* Apply general styling to the page */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2; /* Set the background color */
-    padding: 20px;
+/* Reset default margins and paddings */
+body, h1, h2, h3, p, ul, li {
     margin: 0;
+    padding: 0;
   }
   
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: rgba(240, 242, 246, 0.9);
+    background-image: url('./assets/background.jpg'); /* Replace with your background image URL if desired */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
   h1 {
-    color: #333; /* Set the heading color */
+    padding-top: 30px;
+    font-size: 36px;
+    font-weight: bold;
+    color: #2d2d2d;
   }
   
   h2 {
-    margin-top: 20px;
-    color: #555; /* Set the subheading color */
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d2d2d;
   }
   
-  /* Style for the connect button */
-  #connectButton {
-    color: white;
-    background-color: red;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-bottom: 10px;
+  /* Global styles for buttons */
+  button {
     cursor: pointer;
-  }
-  
-  /* Style for the actions buttons */
-  .actions {
-    color: white;
-    background-color: red;
+    padding: 10px 15px;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
+    border-radius: 20px;
+    font-size: 18px;
+    color: #f8f8f2;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #9a6aed;
   }
   
-  /* Style for the getters buttons */
-  .getters {
-    color: white;
-    background-color: green;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
+  /* Action buttons */
+  button.actions {
+    background-color: #4a90e2;
   }
   
-  /* Style for the icons */
-  .icons {
+  /* Getters buttons */
+  button.getters {
+    background-color: #50c16e;
+  }
+  
+  /* Icons inside buttons */
+  button .icons {
     margin-right: 5px;
   }
   
-  /* Style for the account display */
-  #showAccount {
-    font-weight: bold;
+  /* Response message style */
+  h2 {
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px) saturate(120%) contrast(120%);
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 0.85; /* Initially set to fully transparent */
+    position: relative; /* Add position property */
+    z-index: 1; /* Add a higher z-index to make sure it appears above other elements */
   }
   
-  /* Additional styles for professional decoration */
-  .container {
-    max-width: 600px;
+  /* Input fields and labels */
+  label, input {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d3d3d3;
+    border-radius: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #2d2d2d;
+  }
+  
+  /* Adjust some specific input fields */
+  #funderIndexInput, #ethAmountInput {
+    max-width: 150px;
+  }
+  
+  /* Center the buttons and response messages */
+  button, h2 {
+    display: block;
     margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  /* Media query for responsive layout */
-  @media (max-width: 768px) {
-    .container {
-      max-width: 100%;
+  /* Add spacing between groups */
+  button + h2 {
+    margin-top: 10px;
+  }
+  
+  /* Add a little animation when hovering over buttons and response messages */
+  button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  /* Additional styling for the Connect button */
+  #connectButtonResponse {
+    display: flex;
+    padding: 5px 10px;
+    background-color: #50c16e;
+    color: #f8f8f2;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px) saturate(120%) contrast(120%);
+  }
+  
+  /* Animation for Connect button response */
+  #connectButtonResponse {
+    animation: fadeInUp 0.6s ease; /* Slower fade-in animation */
+  }
+  
+  /* Keyframes for fadeInUp animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 28px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      font-size: 14px;
+    }
+  }
+
+/* Style for the button containers */
+.button-container {
+    width: 625px; /* Set the width to 100% to span the whole screen width */
+    /* max-width: 400px; Set the maximum width to 400px for centering on larger screens */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style for the response container */
+.response-container {
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px) saturate(120%) contrast(120%);
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+    overflow-wrap: break-word; /* Prevent text overflow */
+}
+
+/* Style for the response message inside the container */
+.response-container h2 {
+    margin: 10px;
+}
