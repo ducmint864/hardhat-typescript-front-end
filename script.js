@@ -65,10 +65,12 @@ async function connect() { // Connect D-app to Ethereum account via metamask
 async function fund(ethAmount) { // amount unit: ETH
     let fundSuccess = null;
     try {
-        await FUND_CONTRACT.fund({
+        const txResponse = await FUND_CONTRACT.fund({
             value: ethers.parseEther(ethAmount)
         });
+        await txResponse.wait();
         fundSuccess = true;
+
     } catch (err) {
         fundSuccess = false;
         window.alert("--> fund() failed^ Reason: view in console")
@@ -83,7 +85,8 @@ async function fund(ethAmount) { // amount unit: ETH
 async function withdraw() {
     let withdrawSuccess = null;
     try {
-        await FUND_CONTRACT.withdraw();
+        const txResponse = await FUND_CONTRACT.withdraw();
+        await txResponse.wait()
         withdrawSuccess = true;
     } catch (err) {
         withdrawSuccess = false;
@@ -183,18 +186,20 @@ connectButton.addEventListener("click", async () => {
 });
 
 fundButton.addEventListener("click", async () => {
+    fundButtonResponse.innerHTML = "Transaction's being processed";
     const ethAmount = ethAmountInput.value;
     const fundSuccess = await fund(ethAmount);
 
     // Response
-    fundButtonResponse.innerHTML = (fundSuccess ? ("You have funded " + ethAmount + " ETH") : "");
+    fundButtonResponse.innerHTML = (fundSuccess ? ("You have funded " + ethAmount + " ETH") : "Transaction failed");
 });
 
 withdrawButton.addEventListener("click", async () => {
+    withdrawButtonResponse.innerHTML = "Transaction's being processed";
     const withdrawSuccess = await withdraw();
 
     // Response
-    withdrawButtonResponse.innerHTML = (withdrawSuccess ? "You have withdrawn" : "");
+    withdrawButtonResponse.innerHTML = (withdrawSuccess ? "You have withdrawn" : "Transaction failed");
 });
 
 getContractBalanceButton.addEventListener("click", async () => {
