@@ -38,6 +38,7 @@ let getFunderToAmountButtonResponse = document.getElementById("getFunderToAmount
 let getFunderBalanceButtonResponse = document.getElementById("getFunderBalanceButtonResponse");
 let getContractBalanceButtonResponse = document.getElementById("getContractBalanceButtonResponse");
 
+
 // Action: connect
 async function connect() { // Connect D-app to Ethereum account via metamask
     let funderAddress = null;
@@ -56,7 +57,7 @@ async function connect() { // Connect D-app to Ethereum account via metamask
             console.log("-----------------------------------------------------------------------------------------------");
         }
     }
-    return funderAddress;        
+    return funderAddress;
 }
 
 
@@ -65,10 +66,10 @@ async function fund(ethAmount) { // amount unit: ETH
     let fundSuccess = null;
     try {
         await FUND_CONTRACT.fund({
-            value : ethers.parseEther(ethAmount)
+            value: ethers.parseEther(ethAmount)
         });
         fundSuccess = true;
-    } catch(err) {
+    } catch (err) {
         fundSuccess = false;
         window.alert("--> fund() failed^ Reason: view in console")
         console.log("--> fund() failed^ Reason:\n", err);
@@ -84,14 +85,14 @@ async function withdraw() {
     try {
         await FUND_CONTRACT.withdraw();
         withdrawSuccess = true;
-    } catch(err) {
+    } catch (err) {
         withdrawSuccess = false;
         window.alert("--> withdraw() failed^ Reason: view in console")
         console.log("--> withdraw() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
     }
     return withdrawSuccess;
-} 
+}
 
 
 // action: get contract's balance
@@ -101,9 +102,7 @@ async function getContractBalance() {
         contractBalance = await FUND_CONTRACT.getContractBalance();
         contractBalance = ethers.formatEther(contractBalance);
 
-        // Response
-        getContractBalanceButtonResponse.innerHTML = ("Contract's balance: " + contractBalance + " ETH");
-    } catch(err) {
+    } catch (err) {
         window.alert("--> getContractBalance() failed^ Reason: view in console")
         console.log("--> getContractBalance() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
@@ -119,7 +118,7 @@ async function getFunderBalance() {
         funderBalance = await PROVIDER.getBalance(SIGNER.address);
         funderBalance = ethers.formatEther(funderBalance);
 
-    } catch(err) {
+    } catch (err) {
         window.alert("--> getFunderBalance() failed^ Reason: view in console")
         console.log("--> getFunderBalance() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
@@ -134,9 +133,7 @@ async function getFunder(funderIndex) {
     try {
         funderAddress = await FUND_CONTRACT.getFunder(funderIndex);
 
-        // Response
-        getFunderButtonResponse.innerHTML = ("Funder's address: " +  funderAddress);
-    } catch(err) {
+    } catch (err) {
         window.alert("--> getFunder() failed^ Reason: view in console")
         console.log("--> getFunder() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
@@ -151,9 +148,7 @@ async function getPriceFeed() {
     try {
         priceFeedAddress = await FUND_CONTRACT.getPriceFeed();
 
-        // Response
-        getPriceFeedButtonResponse.innerHTML = ("Price feed's address: " + priceFeedAddress);
-    } catch(err) {
+    } catch (err) {
         window.alert("--> getPriceFeed() failed^ Reason: view in console")
         console.log("--> getPriceFeed() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
@@ -164,19 +159,17 @@ async function getPriceFeed() {
 
 // Action: get funder->amount funded
 async function getFunderToAmount(funderAddress) {
-    let amount = null;
+    let funderAmount = null;
     try {
-        amount = await FUND_CONTRACT.getFunderToAmount(funderAddress);
-        amount = ethers.formatEther(amount);
+        funderAmount = await FUND_CONTRACT.getFunderToAmount(funderAddress);
+        funderAmount = ethers.formatEther(funderAmount);
 
-        // Response
-        getFunderToAmountButtonResponse.innerHTML = ("Funders' amount: " + amount + " ETH");
-    } catch(err) {
+    } catch (err) {
         window.alert("--> getFunderToAmount() failed^ Reason: view in console")
         console.log("--> getFunderToAmount() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
     }
-    return amount;
+    return funderAmount;
 }
 
 
@@ -189,12 +182,12 @@ connectButton.addEventListener("click", async () => {
     connectButtonResponse.innerHTML = (funderAddress);
 });
 
-fundButton.addEventListener("click", async () => {    
+fundButton.addEventListener("click", async () => {
     const ethAmount = ethAmountInput.value;
     const fundSuccess = await fund(ethAmount);
 
     // Response
-    fundButtonResponse.innerHTML = (fundSuccess ? ("You have funded " + ethAmount +  " ETH") : "");
+    fundButtonResponse.innerHTML = (fundSuccess ? ("You have funded " + ethAmount + " ETH") : "");
 });
 
 withdrawButton.addEventListener("click", async () => {
@@ -219,15 +212,27 @@ getFunderBalanceButton.addEventListener("click", async () => {
 })
 
 getFunderButton.addEventListener("click", async () => {
-    const funderIndex = funderIndexInput.value; 
-    getFunder(funderIndex);
+    const funderIndex = funderIndexInput.value;
+    const funderAddress = await getFunder(funderIndex);
+
+    // Response
+    getFunderButtonResponse.innerHTML = ("Funder's address: " + funderAddress);
+
 });
 
 getPriceFeedButton.addEventListener("click", async () => {
-    getPriceFeed();
+    const priceFeedAddress = await getPriceFeed();
+
+    // Response
+    getPriceFeedButtonResponse.innerHTML = ("Price feed's address: " + priceFeedAddress);
+
 });
 
 getFunderToAmountButton.addEventListener("click", async () => {
     const funderAddress = funderAddressInput.value;
-    getFunderToAmount(funderAddress);
+    const funderAmount = await getFunderToAmount(funderAddress);
+
+    // Response
+    getFunderToAmountButtonResponse.innerHTML = ("Funders' amount: " + funderAmount + " ETH");
+
 });

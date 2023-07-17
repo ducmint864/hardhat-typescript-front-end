@@ -45,14 +45,8 @@ export const ABI = [
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "funder",
-                "type": "address"
-            }
-        ],
-        "name": "getAddressToAmount",
+        "inputs": [],
+        "name": "getContractBalance",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -77,6 +71,25 @@ export const ABI = [
                 "internalType": "address",
                 "name": "",
                 "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "funderAddress",
+                "type": "address"
+            }
+        ],
+        "name": "getFunderToAmount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
