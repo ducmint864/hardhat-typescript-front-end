@@ -1,23 +1,25 @@
 // Dependencies
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.4.0/ethers.min.js"
-import { ABI, CONTRACT_ADDRESS } from "./assets/Fund__contract.js";
+import { ABI } from "./assets/Fund__contract.js";
+import FUND_CONTRACT_ADDRESS from "./assets/addresses/Fund__contract__address.js";
 
 
 /* before all */
 let METAMASK_INSTALLED = (typeof window.ethereum !== "undefined") ? true : false;;
+let FUND_CONTRACT;
 let PROVIDER;
 let SIGNER;
-let FUND;
 
 
 // Get button objects from DOM
-let showAccount = document.getElementById("showAccount");
 let connectButton = document.getElementById("connectButton");
 let fundButton = document.getElementById("fundButton");
 let withdrawButton = document.getElementById("withdrawButton");
 let getFunderButton = document.getElementById("getFunderButton");
 let getPriceFeedButton = document.getElementById("getPriceFeedButton");
 let getFunderToAmountButton = document.getElementById("getFunderToAmountButton");
+let getFunderBalanceButton = document.getElementById("getFunderBalanceButton");
+let getContractBalanceButton = document.getElementById("getContractBalanceButton");
 
 
 // Get input objects from DOM
@@ -27,77 +29,113 @@ let funderAddressInput = document.getElementById("funderAddressInput");
 
 
 // Get response objects from DOM 
-// (connect button don't have a dedicated response object because the response is meant to overwrite the butotn's content)
+let connectButtonResponse = document.getElementById("connectButtonResponse");
 let fundButtonResponse = document.getElementById("fundButtonResponse");
 let withdrawButtonResponse = document.getElementById("withdrawButtonResponse");
 let getFunderButtonResponse = document.getElementById("getFunderButtonResponse");
 let getPriceFeedButtonResponse = document.getElementById("getPriceFeedButtonResponse");
 let getFunderToAmountButtonResponse = document.getElementById("getFunderToAmountButtonResponse");
+let getFunderBalanceButtonResponse = document.getElementById("getFunderBalanceButtonResponse");
+let getContractBalanceButtonResponse = document.getElementById("getContractBalanceButtonResponse");
 
-
-// Handle connect button
+// Action: connect
 async function connect() { // Connect D-app to Ethereum account via metamask
+    let funderAddress = null;
     if (!METAMASK_INSTALLED) {
         window.alert("Please install a wallet first 🦊");
-        showAccount.innerHTML = "Please install a wallet first 🦊";
+        connectButtonResponse.innerHTML = "Please install a wallet first 🦊";
     } else {
         try {
             PROVIDER = new ethers.BrowserProvider(window.ethereum);
             SIGNER = await PROVIDER.getSigner();
-            showAccount.innerHTML = await SIGNER.getAddress();
-            FUND = new ethers.Contract(CONTRACT_ADDRESS, ABI, SIGNER); // create a contract instance asigned to the SIGNER
-
-            // Response
-            connectButton.innerHTML = "Connected";
+            FUND_CONTRACT = new ethers.Contract(FUND_CONTRACT_ADDRESS, ABI, SIGNER); // create a contract instance asigned to the SIGNER
+            funderAddress = await SIGNER.getAddress();
         } catch (err) {
             window.alert("--> connect() failed^ Reason: view in console");
             console.log("--> connect() failed^ Reason:\n", err);
             console.log("-----------------------------------------------------------------------------------------------");
         }
     }
+    return funderAddress;        
 }
 
 
-// Handle fund button
+// Action: fund
 async function fund(ethAmount) { // amount unit: ETH
+    let fundSuccess = null;
     try {
-        await FUND.fund({
+        await FUND_CONTRACT.fund({
             value : ethers.parseEther(ethAmount)
         });
-
-        // Response
-        fundButtonResponse.innerHTML = ("You have funded");
+        fundSuccess = true;
     } catch(err) {
+        fundSuccess = false;
         window.alert("--> fund() failed^ Reason: view in console")
         console.log("--> fund() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
     }
+    return fundSuccess;
 }
 
 
-// Handle withdraw button
+// action: withdraw
 async function withdraw() {
+    let withdrawSuccess = null;
     try {
-        await FUND.withdraw();
-
-        // Response
-        withdrawButtonResponse.innerHTML = ("You have withdrawn");
+        await FUND_CONTRACT.withdraw();
+        withdrawSuccess = true;
     } catch(err) {
+        withdrawSuccess = false;
         window.alert("--> withdraw() failed^ Reason: view in console")
         console.log("--> withdraw() failed^ Reason:\n", err);
         console.log("-----------------------------------------------------------------------------------------------");
     }
+    return withdrawSuccess;
 } 
 
 
-// Handle get funder button
+// action: get contract's balance
+async function getContractBalance() {
+    let contractBalance = null;
+    try {
+        contractBalance = await FUND_CONTRACT.getContractBalance();
+        contractBalance = ethers.formatEther(contractBalance);
+
+        // Response
+        getContractBalanceButtonResponse.innerHTML = ("Contract's balance: " + contractBalance + " ETH");
+    } catch(err) {
+        window.alert("--> getContractBalance() failed^ Reason: view in console")
+        console.log("--> getContractBalance() failed^ Reason:\n", err);
+        console.log("-----------------------------------------------------------------------------------------------");
+    }
+    return contractBalance;
+}
+
+
+// Action: get funder's balance
+async function getFunderBalance() {
+    let funderBalance = null;
+    try {
+        funderBalance = await PROVIDER.getBalance(SIGNER.address);
+        funderBalance = ethers.formatEther(funderBalance);
+
+    } catch(err) {
+        window.alert("--> getFunderBalance() failed^ Reason: view in console")
+        console.log("--> getFunderBalance() failed^ Reason:\n", err);
+        console.log("-----------------------------------------------------------------------------------------------");
+    }
+    return funderBalance;
+}
+
+
+// Action: get funder based on index
 async function getFunder(funderIndex) {
     let funderAddress = null;
     try {
-        funderAddress = await FUND.getFunder(funderIndex);
+        funderAddress = await FUND_CONTRACT.getFunder(funderIndex);
 
         // Response
-        getFunderButtonResponse.innerHTML = ("Address of funder: " +  funderAddress);
+        getFunderButtonResponse.innerHTML = ("Funder's address: " +  funderAddress);
     } catch(err) {
         window.alert("--> getFunder() failed^ Reason: view in console")
         console.log("--> getFunder() failed^ Reason:\n", err);
@@ -107,14 +145,14 @@ async function getFunder(funderIndex) {
 }
 
 
-// Handle get price feed button
+// Action: get price feed (address)
 async function getPriceFeed() {
     let priceFeedAddress = null;
     try {
-        priceFeedAddress = await FUND.getPriceFeed();
+        priceFeedAddress = await FUND_CONTRACT.getPriceFeed();
 
         // Response
-        getPriceFeedButtonResponse.innerHTML = ("Price feed address: " + priceFeedAddress);
+        getPriceFeedButtonResponse.innerHTML = ("Price feed's address: " + priceFeedAddress);
     } catch(err) {
         window.alert("--> getPriceFeed() failed^ Reason: view in console")
         console.log("--> getPriceFeed() failed^ Reason:\n", err);
@@ -124,14 +162,15 @@ async function getPriceFeed() {
 }
 
 
-// Handle get funder to amount button
+// Action: get funder->amount funded
 async function getFunderToAmount(funderAddress) {
     let amount = null;
     try {
-        amount = await FUND.getFunderToAmount(funderAddress);
+        amount = await FUND_CONTRACT.getFunderToAmount(funderAddress);
+        amount = ethers.formatEther(amount);
 
         // Response
-        getFunderToAmountButtonResponse.innerHTML = ("Amount: " + amount);
+        getFunderToAmountButtonResponse.innerHTML = ("Funders' amount: " + amount + " ETH");
     } catch(err) {
         window.alert("--> getFunderToAmount() failed^ Reason: view in console")
         console.log("--> getFunderToAmount() failed^ Reason:\n", err);
@@ -141,30 +180,54 @@ async function getFunderToAmount(funderAddress) {
 }
 
 
-// Make DOM objects listen for event 'click'
-connectButton.addEventListener("click", () => {
-    connect();
+// Make buttons listen for event 'click' and respond accordingly
+connectButton.addEventListener("click", async () => {
+    let funderAddress = await connect();
+
+    // Response
+    connectButton.innerHTML = "Connected";
+    connectButtonResponse.innerHTML = (funderAddress);
 });
 
-fundButton.addEventListener("click", () => {    
+fundButton.addEventListener("click", async () => {    
     const ethAmount = ethAmountInput.value;
-    fund(ethAmount);
+    const fundSuccess = await fund(ethAmount);
+
+    // Response
+    fundButtonResponse.innerHTML = (fundSuccess ? ("You have funded " + ethAmount +  " ETH") : "");
 });
 
-withdrawButton.addEventListener("click", () => {
-    withdraw();
+withdrawButton.addEventListener("click", async () => {
+    const withdrawSuccess = await withdraw();
+
+    // Response
+    withdrawButtonResponse.innerHTML = (withdrawSuccess ? "You have withdrawn" : "");
 });
 
-getFunderButton.addEventListener("click", () => {
+getContractBalanceButton.addEventListener("click", async () => {
+    const contractBalance = await getContractBalance();
+
+    // Response
+    getContractBalanceButtonResponse.innerHTML = ("Contract's balance: " + contractBalance + " ETH");
+});
+
+getFunderBalanceButton.addEventListener("click", async () => {
+    const funderBalance = await getFunderBalance();
+
+    // Response
+    getFunderBalanceButtonResponse.innerHTML = ("Funder's balance: " + funderBalance + " ETH");
+})
+
+getFunderButton.addEventListener("click", async () => {
     const funderIndex = funderIndexInput.value; 
     getFunder(funderIndex);
 });
 
-getPriceFeedButton.addEventListener("click", () => {
+getPriceFeedButton.addEventListener("click", async () => {
     getPriceFeed();
 });
 
-getFunderToAmountButton.addEventListener("click", () => {
+getFunderToAmountButton.addEventListener("click", async () => {
     const funderAddress = funderAddressInput.value;
     getFunderToAmount(funderAddress);
 });

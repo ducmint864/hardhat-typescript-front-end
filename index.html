@@ -30,12 +30,12 @@
         Connect
     </button><br>
     <h2>
-        Account: <span id="showAccount"></span>
+        Account: <span id="connectButtonResponse"></span>
     </h2><br>
 
     <!-- </form> -->
     <label for="ethAmountInput">ETH Amount</label>
-    <input id="ethAmountInput" placeholder="0.1" type="number"/>
+    <input id="ethAmountInput" placeholder="0.1" type="text"/>
     <!-- </form> -->
     <button type="button" class="actions" id="fundButton">
         <span class="icons">🤌</span>
@@ -48,6 +48,18 @@
         Withdraw
     </button><br>
     <h2 id="withdrawButtonResponse"></h2>
+    
+    <button type="button" class="actions" id="getContractBalanceButton">
+        <span class="icons">🪙</span>
+        Get contract's balance
+    </button><br>
+    <h2 id="getContractBalanceButtonResponse"></h2>
+
+    <button type="button" class="actions" id="getFunderBalanceButton">
+        <span class="icons">🪙</span>
+        Get funder's balance
+    </button><br>
+    <h2 id="getFunderBalanceButtonResponse"></h2>
 
     <!-- </form> -->
     <label for="funderIndexInput">Funder index</label>
