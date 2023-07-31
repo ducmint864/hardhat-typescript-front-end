@@ -6,9 +6,10 @@ body, h1, h2, h3, p, ul, li {
   
   body {
     font-family: Arial, sans-serif;
+    font-size: 27px;
     line-height: 1.6;
     background-color: rgba(240, 242, 246, 0.9);
-    background-image: url('./assets/background.jpg'); /* Replace with your background image URL if desired */
+    background-image: url(''); /* Replace with your background image URL if desired */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -38,7 +39,7 @@ body, h1, h2, h3, p, ul, li {
     padding: 10px 15px;
     border: none;
     border-radius: 20px;
-    font-size: 18px;
+    font-size: 22px;
     color: #f8f8f2;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -87,7 +88,7 @@ body, h1, h2, h3, p, ul, li {
     padding: 10px;
     border: 1px solid #d3d3d3;
     border-radius: 20px;
-    font-size: 16px;
+    font-size: 18px;
     transition: border-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.7);
